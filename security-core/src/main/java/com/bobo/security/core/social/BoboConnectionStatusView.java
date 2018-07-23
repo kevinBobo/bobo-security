@@ -44,3 +44,5 @@ public class BoboConnectionStatusView extends AbstractView {
 	}
 
 }
+
+
