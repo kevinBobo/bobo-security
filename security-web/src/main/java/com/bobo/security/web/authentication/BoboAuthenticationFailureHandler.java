@@ -5,6 +5,7 @@ import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.web.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -23,15 +24,12 @@ import java.io.IOException;
 @Slf4j
 @Component("boboAuthenticationFailureHandler")
 public class BoboAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
-
+    @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
     private SecurityProperties securityProperties;
 
-    public BoboAuthenticationFailureHandler(ObjectMapper objectMapper, SecurityProperties securityProperties) {
-        this.objectMapper = objectMapper;
-        this.securityProperties = securityProperties;
-    }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response

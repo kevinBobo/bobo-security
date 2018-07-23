@@ -6,14 +6,15 @@ import com.bobo.security.core.properties.SecurityConstants;
 import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.core.validata.code.ValidateCodeSecurityConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -31,41 +32,29 @@ import javax.sql.DataSource;
 @Slf4j
 public class WebSecurityConfig extends AbstractChannelSecurityConfig {
 
+    @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
     private DataSource dataSource;
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
+    @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+    @Autowired
     private SpringSocialConfigurer imoocSocialSecurityConfig;
 
+    @Autowired
     private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
 
+    @Autowired
     private InvalidSessionStrategy invalidSessionStrategy;
-
-    public WebSecurityConfig(AuthenticationSuccessHandler boboAuthenticationSuccessHandler
-            , AuthenticationFailureHandler boboAuthenticationFailureHandler
-            , SecurityProperties securityProperties, DataSource dataSource
-            , UserDetailsService userDetailsService
-            , SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig
-            , ValidateCodeSecurityConfig validateCodeSecurityConfig
-            , SpringSocialConfigurer imoocSocialSecurityConfig
-            , SessionInformationExpiredStrategy sessionInformationExpiredStrategy
-            , InvalidSessionStrategy invalidSessionStrategy) {
-        super(boboAuthenticationSuccessHandler, boboAuthenticationFailureHandler);
-        this.securityProperties = securityProperties;
-        this.dataSource = dataSource;
-        this.userDetailsService = userDetailsService;
-        this.smsCodeAuthenticationSecurityConfig = smsCodeAuthenticationSecurityConfig;
-        this.validateCodeSecurityConfig = validateCodeSecurityConfig;
-        this.imoocSocialSecurityConfig = imoocSocialSecurityConfig;
-        this.sessionInformationExpiredStrategy = sessionInformationExpiredStrategy;
-        this.invalidSessionStrategy = invalidSessionStrategy;
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -117,11 +106,16 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
+        String createSql = "create table persistent_logins (username varchar(64) not null, series varchar(64) primary key, "
+                + "token varchar(64) not null, last_used timestamp not null)";
+
+        JdbcTemplate jdbcTemplate = tokenRepository.getJdbcTemplate();
         try {
-            tokenRepository.setCreateTableOnStartup(true);
-        }catch (Exception e){
-            log.info("remeberme is already existed");
+            jdbcTemplate.execute(createSql);
+        }catch (BadSqlGrammarException e){
+            log.error("remeberme table already created");
         }
         return tokenRepository;
     }
+
 }

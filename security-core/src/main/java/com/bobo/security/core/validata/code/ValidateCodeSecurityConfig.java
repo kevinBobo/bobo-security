@@ -1,5 +1,6 @@
 package com.bobo.security.core.validata.code;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -16,11 +17,9 @@ import javax.servlet.Filter;
 @Component("validateCodeSecurityConfig")
 public class ValidateCodeSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
+    @Autowired
     private Filter validateCodeFilter;
 
-    public ValidateCodeSecurityConfig(Filter validateCodeFilter) {
-        this.validateCodeFilter = validateCodeFilter;
-    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {

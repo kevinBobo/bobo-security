@@ -5,10 +5,10 @@ import com.bobo.security.web.support.SimpleResponse;
 import com.bobo.security.web.support.SocialUserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -37,14 +37,12 @@ public class BrowserSecurityController {
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
+    @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
-    public BrowserSecurityController(SecurityProperties securityProperties, ProviderSignInUtils providerSignInUtils) {
-        this.securityProperties = securityProperties;
-        this.providerSignInUtils = providerSignInUtils;
-    }
 
     /**
      * 根据请求的不同返回页面或者json信息

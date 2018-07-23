@@ -1,6 +1,7 @@
 package com.bobo.security.core.authentication;
 
 import com.bobo.security.core.properties.SecurityConstants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -13,15 +14,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  */
 public class AbstractChannelSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     protected AuthenticationSuccessHandler boboAuthenticationSuccessHandler;
 
+    @Autowired
     protected AuthenticationFailureHandler boboAuthenticationFailureHandler;
-
-    public AbstractChannelSecurityConfig(AuthenticationSuccessHandler boboAuthenticationSuccessHandler,
-                                         AuthenticationFailureHandler boboAuthenticationFailureHandler){
-        this.boboAuthenticationFailureHandler = boboAuthenticationFailureHandler;
-        this.boboAuthenticationSuccessHandler = boboAuthenticationSuccessHandler;
-    }
 
     protected void applyPasswordAuthenticationConfig(HttpSecurity http) throws Exception {
         http.formLogin()

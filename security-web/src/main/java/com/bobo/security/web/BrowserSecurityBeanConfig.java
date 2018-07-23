@@ -3,6 +3,7 @@ package com.bobo.security.web;
 import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.web.session.BoboExpiredSessionStrategy;
 import com.bobo.security.web.session.BoboInvalidSessionStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,8 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 @Configuration
 public class BrowserSecurityBeanConfig {
 
+    @Autowired
     private SecurityProperties securityProperties;
-
-    public BrowserSecurityBeanConfig(SecurityProperties securityProperties) {
-        this.securityProperties = securityProperties;
-    }
 
     @Bean
     @ConditionalOnMissingBean(InvalidSessionStrategy.class)
