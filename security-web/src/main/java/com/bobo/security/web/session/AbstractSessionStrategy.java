@@ -2,6 +2,7 @@ package com.bobo.security.web.session;
 
 import com.bobo.security.web.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +21,9 @@ import java.io.IOException;
  * @Description:
  * @date 2018/7/23上午10:25
  */
+@Slf4j
 public class AbstractSessionStrategy {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * 跳转的url
      */
@@ -64,7 +65,7 @@ public class AbstractSessionStrategy {
 
         if (StringUtils.endsWithIgnoreCase(sourceUrl, ".html")) {
             targetUrl = destinationUrl+".html";
-            logger.info("session失效,跳转到"+targetUrl);
+            log.info("session失效,跳转到"+targetUrl);
             redirectStrategy.sendRedirect(request, response, targetUrl);
         }else{
             String message = "session已失效";

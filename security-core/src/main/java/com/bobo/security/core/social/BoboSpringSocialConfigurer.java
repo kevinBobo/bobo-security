@@ -4,8 +4,9 @@ import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 /**
- * @author zhailiang
- *
+ * @author bobo
+ * @Description:
+ * @date 2018/7/23上午8:54
  */
 public class BoboSpringSocialConfigurer extends SpringSocialConfigurer {
 	

@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author zhailiang
- *
+ * @author bobo
+ * @Description:
+ * @date 2018/7/23上午8:54
  */
 @Component("connect/status")
 public class BoboConnectionStatusView extends AbstractView {
