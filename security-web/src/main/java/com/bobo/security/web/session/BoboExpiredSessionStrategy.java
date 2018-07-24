@@ -27,7 +27,7 @@ public class BoboExpiredSessionStrategy extends AbstractSessionStrategy implemen
     }
 
     /* (non-Javadoc)
-     * @see com.imooc.security.browser.session.AbstractSessionStrategy#isConcurrency()
+     * @see com.bobo.security.browser.session.AbstractSessionStrategy#isConcurrency()
      */
     @Override
     protected boolean isConcurrency() {

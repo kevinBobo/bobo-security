@@ -19,7 +19,7 @@
 
 
     <properties>
-        <imooc.security.version>1.0.0-SNAPSHOT</imooc.security.version>
+        <bobo.security.version>1.0.0-SNAPSHOT</bobo.security.version>
     </properties>
 
     <dependencyManagement>

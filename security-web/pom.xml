@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.bobo.security</groupId>
             <artifactId>security-core</artifactId>
-            <version>${imooc.security.version}</version>
+            <version>${bobo.security.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.session</groupId>

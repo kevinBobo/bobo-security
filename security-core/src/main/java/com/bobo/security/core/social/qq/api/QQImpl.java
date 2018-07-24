@@ -36,7 +36,7 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.imooc.security.core.social.qq.api.QQ#getUserInfo()
+	 * @see com.bobo.security.core.social.qq.api.QQ#getUserInfo()
 	 */
 	@Override
 	public QQUserInfo getUserInfo() {
