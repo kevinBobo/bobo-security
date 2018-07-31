@@ -1,9 +1,13 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.config;
 
 import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.core.properties.WeixinProperties;
-import com.bobo.security.core.social.BoboConnectView;
+import com.bobo.security.core.social.view.BoboConnectView;
 import com.bobo.security.core.social.weixin.connect.WeixinConnectionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.social.SocialAutoConfigurerAdapter;
@@ -15,18 +19,15 @@ import org.springframework.web.servlet.View;
 /**
  * 微信登录配置
  * 
- * @author zhailiang
+ * @author bobo
  *
  */
 @Configuration
 @ConditionalOnProperty(prefix = "bobo.security.social.weixin", name = "app-id")
 public class WeixinAutoConfiguration extends SocialAutoConfigurerAdapter {
 
+	@Autowired
 	private SecurityProperties securityProperties;
-
-	public WeixinAutoConfiguration(SecurityProperties securityProperties) {
-		this.securityProperties = securityProperties;
-	}
 
 	/*
 	 * (non-Javadoc)

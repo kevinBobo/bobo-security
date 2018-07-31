@@ -1,6 +1,5 @@
 package com.bobo.security.web;
 
-import com.bobo.security.core.authentication.AbstractChannelSecurityConfig;
 import com.bobo.security.core.authentication.moblie.SmsCodeAuthenticationSecurityConfig;
 import com.bobo.security.core.properties.SecurityConstants;
 import com.bobo.security.core.properties.SecurityProperties;

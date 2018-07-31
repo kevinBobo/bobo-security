@@ -1,19 +1,40 @@
+/**
+ * 
+ */
 package com.bobo.security.core.properties;
 
-import lombok.Data;
-
 /**
+ * 图片验证码配置项
+ * 
  * @author bobo
- * @Description:
- * @date 2018/7/23上午8:02
+ *
  */
-@Data
-public class ImageCodeProperties extends SmsCodeProperties{
+public class ImageCodeProperties extends SmsCodeProperties {
+	
+	public ImageCodeProperties() {
+		setLength(4);
+	}
+	
+	/**
+	 * 图片宽
+	 */
+	private int width = 67;
+	/**
+	 * 图片高
+	 */
+	private int height = 23;
+	
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
 
-    public ImageCodeProperties() {
-        setLength(4);
-    }
-
-    private int width = 67;
-    private int height = 23;
 }

@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.connect;
 
 import org.springframework.social.oauth2.AccessGrant;

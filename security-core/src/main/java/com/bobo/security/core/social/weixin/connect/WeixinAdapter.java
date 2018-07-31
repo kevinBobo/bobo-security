@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.connect;
 
 import com.bobo.security.core.social.weixin.api.Weixin;

@@ -12,6 +12,7 @@
         <module>security-app</module>
         <module>security-web</module>
         <module>securtiy-demo</module>
+        <module>security-authorize</module>
     </modules>
     <packaging>pom</packaging>
 

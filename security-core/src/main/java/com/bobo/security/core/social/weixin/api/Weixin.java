@@ -1,9 +1,13 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.api;
 
 /**
+ * 微信API调用接口
+ * 
  * @author bobo
- * @Description: 微信api调用接口
- * @date 2018/7/23上午10:41
+ *
  */
 public interface Weixin {
 

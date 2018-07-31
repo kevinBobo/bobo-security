@@ -1,29 +1,57 @@
+/**
+ * 
+ */
 package com.bobo.security.core.validata.code;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
+
 /**
+ * 验证码信息封装类
+ * 
  * @author bobo
- * @Description:
- * @date 2018/7/23上午8:17
+ *
  */
-@Data
-@AllArgsConstructor
-public class ValidateCode {
+public class ValidateCode implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1588203828504660915L;
 
-    private String code;
+	private String code;
+	
+	private LocalDateTime expireTime;
+	
+	public ValidateCode(String code, int expireIn){
+		this.code = code;
+		this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
+	}
+	
+	public ValidateCode(String code, LocalDateTime expireTime){
+		this.code = code;
+		this.expireTime = expireTime;
+	}
+	
+	public boolean isExpried() {
+		return LocalDateTime.now().isAfter(expireTime);
+	}
 
-    private LocalDateTime expireTime;
+	public String getCode() {
+		return code;
+	}
 
-    public ValidateCode(String code, int expireIn){
-        this.code = code;
-        this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public boolean isExpried() {
-        return LocalDateTime.now().isAfter(expireTime);
-    }
+	public LocalDateTime getExpireTime() {
+		return expireTime;
+	}
+
+	public void setExpireTime(LocalDateTime expireTime) {
+		this.expireTime = expireTime;
+	}
+	
 }

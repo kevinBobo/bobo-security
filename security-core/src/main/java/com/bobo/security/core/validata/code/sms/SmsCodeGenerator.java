@@ -1,32 +1,47 @@
+/**
+ * 
+ */
 package com.bobo.security.core.validata.code.sms;
 
 import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.core.validata.code.ValidateCode;
 import com.bobo.security.core.validata.code.ValidateCodeGenerator;
-import lombok.Data;
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
 /**
+ * 短信验证码生成器
+ * 
  * @author bobo
- * @Description:
- * @date 2018/7/23上午8:58
+ *
  */
 @Component("smsValidateCodeGenerator")
-@Data
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
-    private SecurityProperties securityProperties;
+	@Autowired
+	private SecurityProperties securityProperties;
 
-    public SmsCodeGenerator(SecurityProperties securityProperties) {
-        this.securityProperties = securityProperties;
-    }
+	/**
+	 *
+	 * @param request
+	 * @return
+	 */
+	@Override
+	public ValidateCode generate(ServletWebRequest request) {
+		String code = RandomStringUtils.randomNumeric(securityProperties.getCode().getSms().getLength());
+		return new ValidateCode(code, securityProperties.getCode().getSms().getExpireIn());
+	}
 
-    @Override
-    public ValidateCode generate(ServletWebRequest request) {
-        String code = RandomStringUtils.randomNumeric(securityProperties.getCode().getSms().getLength());
-        return new ValidateCode(code, securityProperties.getCode().getSms().getExpireIn());
-    }
+	public SecurityProperties getSecurityProperties() {
+		return securityProperties;
+	}
+
+	public void setSecurityProperties(SecurityProperties securityProperties) {
+		this.securityProperties = securityProperties;
+	}
+	
+	
 
 }

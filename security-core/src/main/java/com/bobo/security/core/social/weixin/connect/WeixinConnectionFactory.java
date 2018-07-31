@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.connect;
 
 import com.bobo.security.core.social.weixin.api.Weixin;
@@ -8,7 +11,6 @@ import org.springframework.social.connect.support.OAuth2Connection;
 import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.OAuth2ServiceProvider;
-
 
 /**
  * 微信连接工厂

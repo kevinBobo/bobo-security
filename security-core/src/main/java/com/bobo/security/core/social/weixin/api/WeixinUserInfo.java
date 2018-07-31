@@ -1,13 +1,13 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.api;
 
-import lombok.Data;
-
 /**
+ * 微信用户信息
+ * 
  * @author bobo
- * @Description: 微信用户信息
- * @date 2018/7/23上午10:41
  */
-@Data
 public class WeixinUserInfo {
 	
 	/**
@@ -50,5 +50,126 @@ public class WeixinUserInfo {
 	 * 用户统一标识。针对一个微信开放平台帐号下的应用，同一用户的unionid是唯一的。
 	 */
 	private String unionid;
+	
+	/**
+	 * @return the openid
+	 */
+	public String getOpenid() {
+		return openid;
+	}
+	/**
+	 * @param openid the openid to set
+	 */
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+	/**
+	 * @return the nickname
+	 */
+	public String getNickname() {
+		return nickname;
+	}
+	/**
+	 * @param nickname the nickname to set
+	 */
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	/**
+	 * @return the sex
+	 */
+	public String getSex() {
+		return sex;
+	}
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	/**
+	 * @return the province
+	 */
+	public String getProvince() {
+		return province;
+	}
+	/**
+	 * @param province the province to set
+	 */
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	/**
+	 * @return the city
+	 */
+	public String getCity() {
+		return city;
+	}
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(String city) {
+		this.city = city;
+	}
+	/**
+	 * @return the country
+	 */
+	public String getCountry() {
+		return country;
+	}
+	/**
+	 * @param country the country to set
+	 */
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	/**
+	 * @return the headimgurl
+	 */
+	public String getHeadimgurl() {
+		return headimgurl;
+	}
+	/**
+	 * @param headimgurl the headimgurl to set
+	 */
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
+	}
+	/**
+	 * @return the privilege
+	 */
+	public String[] getPrivilege() {
+		return privilege;
+	}
+	/**
+	 * @param privilege the privilege to set
+	 */
+	public void setPrivilege(String[] privilege) {
+		this.privilege = privilege;
+	}
+	/**
+	 * @return the unionid
+	 */
+	public String getUnionid() {
+		return unionid;
+	}
+	/**
+	 * @param unionid the unionid to set
+	 */
+	public void setUnionid(String unionid) {
+		this.unionid = unionid;
+	}
+	/**
+	 * @return the language
+	 */
+	public String getLanguage() {
+		return language;
+	}
+	/**
+	 * @param language the language to set
+	 */
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
 }

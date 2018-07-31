@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.qq.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,8 +10,7 @@ import org.springframework.social.oauth2.TokenStrategy;
 
 /**
  * @author bobo
- * @Description:
- * @date 2018/7/22下午9:39
+ *
  */
 public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
 	
@@ -34,9 +36,10 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
 		
 		this.openId = StringUtils.substringBetween(result, "\"openid\":\"", "\"}");
 	}
-	
-	/* (non-Javadoc)
-	 * @see com.bobo.security.core.social.qq.api.QQ#getUserInfo()
+
+	/**
+	 *
+	 * @return
 	 */
 	@Override
 	public QQUserInfo getUserInfo() {

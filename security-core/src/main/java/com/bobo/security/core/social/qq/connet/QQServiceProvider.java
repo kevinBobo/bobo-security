@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.qq.connet;
 
 
@@ -7,8 +10,7 @@ import org.springframework.social.oauth2.AbstractOAuth2ServiceProvider;
 
 /**
  * @author bobo
- * @Description:
- * @date 2018/7/23上午10:41
+ *
  */
 public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
 
@@ -23,6 +25,9 @@ public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
 		this.appId = appId;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.springframework.social.oauth2.AbstractOAuth2ServiceProvider#getApi(java.lang.String)
+	 */
 	@Override
 	public QQ getApi(String accessToken) {
 		return new QQImpl(accessToken, appId);

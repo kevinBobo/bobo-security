@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.qq.connet;
 
 import com.bobo.security.core.social.qq.api.QQ;
@@ -8,8 +11,7 @@ import org.springframework.social.connect.UserProfile;
 
 /**
  * @author bobo
- * @Description:
- * @date 2018/7/23上午10:41
+ *
  */
 public class QQAdapter implements ApiAdapter<QQ> {
 

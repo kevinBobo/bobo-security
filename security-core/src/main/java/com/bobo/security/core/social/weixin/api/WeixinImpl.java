@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.weixin.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,11 +13,11 @@ import org.springframework.social.oauth2.TokenStrategy;
 import java.nio.charset.Charset;
 import java.util.List;
 
-
 /**
+ * Weixin API调用模板， scope为Request的Spring bean, 根据当前用户的accessToken创建。
+ * 
  * @author bobo
- * @Description: Weixin API调用模板， scope为Request的Spring bean, 根据当前用户的accessToken创建。
- * @date 2018/7/23上午10:41
+ *
  */
 public class WeixinImpl extends AbstractOAuth2ApiBinding implements Weixin {
 	

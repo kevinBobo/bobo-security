@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.bobo.security.core.social.qq.connet;
 
 
@@ -6,8 +9,7 @@ import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 
 /**
  * @author bobo
- * @Description:
- * @date 2018/7/23上午10:41
+ *
  */
 public class QQConnectionFactory extends OAuth2ConnectionFactory<QQ> {
 
