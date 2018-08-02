@@ -3,11 +3,14 @@
  */
 package com.bobo.security.core.properties;
 
+import lombok.Data;
+
 /**
  * 社交登录配置项
  * @author bobo
  *
  */
+@Data
 public class SocialProperties {
 	
 	/**
@@ -19,28 +22,6 @@ public class SocialProperties {
 	
 	private WeixinProperties weixin = new WeixinProperties();
 
-	public QQProperties getQq() {
-		return qq;
-	}
 
-	public void setQq(QQProperties qq) {
-		this.qq = qq;
-	}
-
-	public String getFilterProcessesUrl() {
-		return filterProcessesUrl;
-	}
-
-	public void setFilterProcessesUrl(String filterProcessesUrl) {
-		this.filterProcessesUrl = filterProcessesUrl;
-	}
-
-	public WeixinProperties getWeixin() {
-		return weixin;
-	}
-
-	public void setWeixin(WeixinProperties weixin) {
-		this.weixin = weixin;
-	}
 	
 }

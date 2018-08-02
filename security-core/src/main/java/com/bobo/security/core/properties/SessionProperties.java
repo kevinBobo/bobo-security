@@ -3,12 +3,15 @@
  */
 package com.bobo.security.core.properties;
 
+import lombok.Data;
+
 /**
  * session管理相关配置项
  * 
  * @author bobo
  *
  */
+@Data
 public class SessionProperties {
 	
 	/**
@@ -24,28 +27,5 @@ public class SessionProperties {
 	 */
 	private String sessionInvalidUrl = SecurityConstants.DEFAULT_SESSION_INVALID_URL;
 
-	public int getMaximumSessions() {
-		return maximumSessions;
-	}
 
-	public void setMaximumSessions(int maximumSessions) {
-		this.maximumSessions = maximumSessions;
-	}
-
-	public boolean isMaxSessionsPreventsLogin() {
-		return maxSessionsPreventsLogin;
-	}
-
-	public void setMaxSessionsPreventsLogin(boolean maxSessionsPreventsLogin) {
-		this.maxSessionsPreventsLogin = maxSessionsPreventsLogin;
-	}
-
-	public String getSessionInvalidUrl() {
-		return sessionInvalidUrl;
-	}
-
-	public void setSessionInvalidUrl(String sessionInvalidUrl) {
-		this.sessionInvalidUrl = sessionInvalidUrl;
-	}
-	
 }

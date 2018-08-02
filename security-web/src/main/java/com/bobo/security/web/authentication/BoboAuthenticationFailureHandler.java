@@ -2,7 +2,7 @@ package com.bobo.security.web.authentication;
 
 import com.bobo.security.core.properties.LoginResponseType;
 import com.bobo.security.core.properties.SecurityProperties;
-import com.bobo.security.web.support.SimpleResponse;
+import com.bobo.security.core.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +33,17 @@ public class BoboAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response
-            , AuthenticationException e) throws IOException, ServletException {
+            , AuthenticationException exception) throws IOException, ServletException {
 
 
-        log.info("登陆失败");
-        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getLoginType())) {
-            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-            response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(e.getMessage())));
-        } else {
-            super.onAuthenticationFailure(request, response, e);
+        logger.info("登录失败");
+
+        if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType("application/json;charset=UTF-8");
+            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+        }else{
+            super.onAuthenticationFailure(request, response, exception);
         }
 
     }

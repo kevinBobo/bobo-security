@@ -1,7 +1,8 @@
 package com.bobo.security.web;
 
+import com.bobo.security.core.authentication.FormAuthenticationConfig;
 import com.bobo.security.core.authentication.moblie.SmsCodeAuthenticationSecurityConfig;
-import com.bobo.security.core.properties.SecurityConstants;
+import com.bobo.security.core.authorize.AuthorizeConfigManager;
 import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.core.validata.code.ValidateCodeSecurityConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +12,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
@@ -29,7 +32,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Slf4j
-public class WebSecurityConfig extends AbstractChannelSecurityConfig {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityProperties securityProperties;
@@ -55,10 +58,19 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private InvalidSessionStrategy invalidSessionStrategy;
 
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
+    @Autowired
+    private FormAuthenticationConfig formAuthenticationConfig;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        applyPasswordAuthenticationConfig(http);
+        formAuthenticationConfig.configure(http);
 
         http.apply(validateCodeSecurityConfig)
                 .and()
@@ -66,6 +78,7 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
                 .and()
                 .apply(boboSocialSecurityConfig)
                 .and()
+                //记住我配置，如果想在'记住我'登录时记录日志，可以注册一个InteractiveAuthenticationSuccessEvent事件的监听器
                 .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
@@ -78,21 +91,14 @@ public class WebSecurityConfig extends AbstractChannelSecurityConfig {
                 .expiredSessionStrategy(sessionInformationExpiredStrategy)
                 .and()
                 .and()
-                .authorizeRequests()
-                .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
-                        securityProperties.getBrowser().getSignUpUrl(),
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()+".json",
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl()+".html",
-                        "/user/regist")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                .logout()
+                .logoutUrl("/signOut")
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
                 .and()
                 .csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
 
     }
 

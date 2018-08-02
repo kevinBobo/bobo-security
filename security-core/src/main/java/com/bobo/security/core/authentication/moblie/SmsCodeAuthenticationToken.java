@@ -46,7 +46,6 @@ public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
 	 * authentication token.
 	 *
 	 * @param principal
-	 * @param credentials
 	 * @param authorities
 	 */
 	public SmsCodeAuthenticationToken(Object principal,

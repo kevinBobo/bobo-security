@@ -3,12 +3,17 @@
  */
 package com.bobo.security.core.properties;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 图片验证码配置项
  * 
  * @author bobo
  *
  */
+@Setter
+@Getter
 public class ImageCodeProperties extends SmsCodeProperties {
 	
 	public ImageCodeProperties() {
@@ -23,18 +28,6 @@ public class ImageCodeProperties extends SmsCodeProperties {
 	 * 图片高
 	 */
 	private int height = 23;
-	
-	public int getWidth() {
-		return width;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public int getHeight() {
-		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
-	}
+
 
 }

@@ -12,11 +12,21 @@
     <artifactId>securtiy-demo</artifactId>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>com.bobo.security</groupId>-->
+            <!--<artifactId>security-web</artifactId>-->
+            <!--<version>${bobo.security.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.bobo.security</groupId>
-            <artifactId>security-web</artifactId>
+            <artifactId>security-app</artifactId>
             <version>${bobo.security.version}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.bobo.security</groupId>-->
+            <!--<artifactId>security-authorize</artifactId>-->
+            <!--<version>${bobo.security.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

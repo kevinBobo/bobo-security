@@ -57,5 +57,16 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ptb-snapshots</id>
+            <url>http://192.168.5.41:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ptb-releases</id>
+            <url>http://192.168.5.41:8081/nexus/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
 
 </project>

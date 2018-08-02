@@ -36,7 +36,7 @@ public class SmsCodeAuthenticationSecurityConfig extends SecurityConfigurerAdapt
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	@Autowired
+	@Autowired(required = false)
 	private PersistentTokenRepository persistentTokenRepository;
 	
 	/* (non-Javadoc)

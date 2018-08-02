@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * 默认的session失效处理策略
  * 
- * @author zhailiang
+ * @author bobo
  *
  */
 public class BoboInvalidSessionStrategy extends AbstractSessionStrategy implements InvalidSessionStrategy {

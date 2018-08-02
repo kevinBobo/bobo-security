@@ -4,6 +4,7 @@
 package com.bobo.security.app.authentication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -35,9 +36,9 @@ import java.io.IOException;
  *
  */
 @Component("boboAuthenticationSuccessHandler")
+@Slf4j
 public class BoboAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private ObjectMapper objectMapper;

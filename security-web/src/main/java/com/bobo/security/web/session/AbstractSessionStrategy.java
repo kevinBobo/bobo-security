@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * 抽象的session失效处理器
  * 
- * @author zhailiang
+ * @author bobo
  *
  */
 public class AbstractSessionStrategy {

@@ -3,11 +3,14 @@
  */
 package com.bobo.security.core.properties;
 
+import lombok.Data;
+
 /**
  * 验证码配置
  * @author bobo
  *
  */
+@Data
 public class ValidateCodeProperties {
 	
 	/**
@@ -19,20 +22,6 @@ public class ValidateCodeProperties {
 	 */
 	private SmsCodeProperties sms = new SmsCodeProperties();
 
-	public ImageCodeProperties getImage() {
-		return image; 
-	}
 
-	public void setImage(ImageCodeProperties image) {
-		this.image = image;
-	}
-
-	public SmsCodeProperties getSms() {
-		return sms;
-	}
-
-	public void setSms(SmsCodeProperties sms) {
-		this.sms = sms;
-	}
 	
 }
