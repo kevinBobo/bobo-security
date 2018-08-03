@@ -22,6 +22,8 @@ public class SocialProperties {
 	
 	private WeixinProperties weixin = new WeixinProperties();
 
+	private WeiboProperties weibo = new WeiboProperties();
+
 
 	
 }

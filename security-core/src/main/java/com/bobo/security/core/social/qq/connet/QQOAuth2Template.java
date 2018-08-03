@@ -3,6 +3,7 @@
  */
 package com.bobo.security.core.social.qq.connet;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +19,8 @@ import java.nio.charset.Charset;
  * @author bobo
  *
  */
+@Slf4j
 public class QQOAuth2Template extends OAuth2Template {
-	
-	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	public QQOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
 		super(clientId, clientSecret, authorizeUrl, accessTokenUrl);
@@ -34,7 +34,7 @@ public class QQOAuth2Template extends OAuth2Template {
 	protected AccessGrant postForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
 		String responseStr = getRestTemplate().postForObject(accessTokenUrl, parameters, String.class);
 		
-		logger.info("获取accessToke的响应："+responseStr);
+		log.info("获取accessToke的响应："+responseStr);
 		
 		String[] items = StringUtils.splitByWholeSeparatorPreserveAllTokens(responseStr, "&");
 		
