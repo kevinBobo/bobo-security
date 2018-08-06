@@ -3,6 +3,8 @@
  */
 package com.bobo.security.core.social.support;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 
@@ -12,6 +14,8 @@ import org.springframework.social.security.SpringSocialConfigurer;
  * @author bobo
  *
  */
+@Setter
+@Getter
 public class BoboSpringSocialConfigurer extends SpringSocialConfigurer {
 
 	private String filterProcessesUrl;
@@ -34,23 +38,6 @@ public class BoboSpringSocialConfigurer extends SpringSocialConfigurer {
 			socialAuthenticationFilterPostProcessor.process(filter);
 		}
 		return (T) filter;
-	}
-
-	public String getFilterProcessesUrl() {
-		return filterProcessesUrl;
-	}
-
-	public void setFilterProcessesUrl(String filterProcessesUrl) {
-		this.filterProcessesUrl = filterProcessesUrl;
-	}
-
-	public SocialAuthenticationFilterPostProcessor getSocialAuthenticationFilterPostProcessor() {
-		return socialAuthenticationFilterPostProcessor;
-	}
-
-	public void setSocialAuthenticationFilterPostProcessor(
-			SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor) {
-		this.socialAuthenticationFilterPostProcessor = socialAuthenticationFilterPostProcessor;
 	}
 
 }

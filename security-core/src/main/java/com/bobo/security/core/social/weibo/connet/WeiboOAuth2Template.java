@@ -15,24 +15,35 @@
  */
 package com.bobo.security.core.social.weibo.connet;
 
+import com.bobo.security.core.social.weibo.handler.WeiboResponseErrorHandler;
+import com.bobo.security.core.social.weixin.connect.WeixinAccessGrant;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.OAuth2Template;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -54,38 +65,12 @@ public class WeiboOAuth2Template extends OAuth2Template {
 
     @Override
     protected RestTemplate createRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate(
-                ClientHttpRequestFactorySelector.getRequestFactory());
-        HttpMessageConverter<?> messageConverter = new FormHttpMessageConverter() {
+        RestTemplate restTemplate = super.createRestTemplate();
+        restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
 
-            private final ObjectMapper objectMapper = new ObjectMapper();
 
-            @Override
-            public boolean canRead(Class<?> clazz, MediaType mediaType) {
-                return true;
-            }
+        restTemplate.setErrorHandler(new WeiboResponseErrorHandler());
 
-            @Override
-            public MultiValueMap<String, String> read(
-                    Class<? extends MultiValueMap<String, ?>> clazz,
-                    HttpInputMessage inputMessage) throws IOException,
-                    HttpMessageNotReadableException {
-
-                TypeReference<Map<String, ?>> mapType = new TypeReference<Map<String, ?>>() {
-                };
-                LinkedHashMap<String, ?> readValue = objectMapper.readValue(
-                        inputMessage.getBody(), mapType);
-                LinkedMultiValueMap<String, String> result = new LinkedMultiValueMap<String, String>();
-                for (Entry<String, ?> currentEntry : readValue.entrySet()) {
-                    result.add(currentEntry.getKey(), currentEntry.getValue()
-                            .toString());
-                }
-                return result;
-            }
-        };
-
-        restTemplate.setMessageConverters(Collections
-                .<HttpMessageConverter<?>>singletonList(messageConverter));
         return restTemplate;
     }
 
@@ -100,18 +85,40 @@ public class WeiboOAuth2Template extends OAuth2Template {
 
         String url = accessTokenUrl + "?" + params.stream().collect(Collectors.joining("&"));
 
-        if (log.isDebugEnabled()) {
-            log.debug("url = " + url);
+
+        log.info("开始请求微博accesstoken:"+url);
+
+        String response = getRestTemplate()
+                .postForObject(url, null, String.class);
+
+        log.info(response);
+
+        //返回错误码时直接返回空
+        Map<String, Object> result = null;
+        try {
+            result = new ObjectMapper().readValue(response, Map.class);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        MultiValueMap<String, String> response = getRestTemplate()
-                .postForObject(url, null, MultiValueMap.class);
-        String expires = response.getFirst("expires_in");
-        String accessToken = response.getFirst("access_token");
-        if (log.isDebugEnabled()) {
-            log.debug("access token value = " + accessToken);
+
+        //返回错误码时直接返回空
+        if(StringUtils.isNotBlank(MapUtils.getString(result, "error_code"))){
+            String errcode = MapUtils.getString(result, "error_code");
+            String errmsg = MapUtils.getString(result, "error");
+            throw new RuntimeException("获取access token失败, errcode:"+errcode+", errmsg:"+errmsg);
         }
-        return new AccessGrant(accessToken, null, null,
+
+        String token = MapUtils.getString(result, "access_token");
+
+        Long expires = MapUtils.getLong(result, "expires_in");
+
+        AccessGrant accessToken = new AccessGrant(
+                token,
+                null,
+                null,
                 expires != null ? Long.valueOf(expires) : null);
+
+        return accessToken;
     }
 
 }

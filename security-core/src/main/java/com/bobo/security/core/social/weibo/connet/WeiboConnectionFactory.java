@@ -22,6 +22,7 @@ import org.springframework.social.connect.support.OAuth2ConnectionFactory;
 
 import java.util.Date;
 
+
 /**
  * WeiboConnectionFactory that creates connections that expose the Weibo API
  * binding.

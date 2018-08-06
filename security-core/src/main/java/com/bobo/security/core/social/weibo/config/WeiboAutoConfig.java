@@ -1,7 +1,7 @@
 package com.bobo.security.core.social.weibo.config;
 
 import com.bobo.security.core.properties.SecurityProperties;
-import com.bobo.security.core.properties.WeixinProperties;
+import com.bobo.security.core.properties.WeiboProperties;
 import com.bobo.security.core.social.weibo.connet.WeiboConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -23,7 +23,7 @@ public class WeiboAutoConfig extends SocialAutoConfigurerAdapter {
 
     @Override
     protected ConnectionFactory<?> createConnectionFactory() {
-        WeixinProperties weixin = securityProperties.getSocial().getWeixin();
-        return new WeiboConnectionFactory(weixin.getProviderId(),weixin.getAppId(),weixin.getAppSecret());
+        WeiboProperties weibo = securityProperties.getSocial().getWeibo();
+        return new WeiboConnectionFactory(weibo.getProviderId(),weibo.getAppId(),weibo.getAppSecret());
     }
 }

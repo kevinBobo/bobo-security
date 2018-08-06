@@ -2,6 +2,7 @@ package com.bobo.security.core.properties;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.autoconfigure.social.SocialProperties;
 
 /**
  * @author bobo
@@ -10,7 +11,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class WeiboProperties extends SocialProperties{
+public class WeiboProperties extends SocialProperties {
 
     /**
      * 第三方id，用来决定发起第三方登录的url，默认是 weibo。
