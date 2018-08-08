@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.bobo.security.app.authentication.openid;
 
 import org.springframework.beans.factory.annotation.Autowired;

@@ -40,4 +40,6 @@ public class BoboSpringSocialConfigurer extends SpringSocialConfigurer {
 		return (T) filter;
 	}
 
+
+
 }

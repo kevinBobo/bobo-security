@@ -31,6 +31,10 @@ public class SecurityProperties {
 	 */
 	private OAuth2Properties oauth2 = new OAuth2Properties();
 
+	/**
+	 * 不拦截的url地址
+	 */
+	private NoAuthUrlProperties noauth = new NoAuthUrlProperties();
 
 
 

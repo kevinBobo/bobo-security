@@ -1,5 +1,6 @@
 package com.bobo.security.core.social.weibo.api;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -32,11 +33,13 @@ public class WeiboImpl  extends AbstractOAuth2ApiBinding implements Weibo  {
         this.accessToken = accessToken;
 
         String url = String.format(URL_GET_UID, accessToken);
+
+        log.info("获取weibo用户id："+url);
         String result = getRestTemplate().getForObject(url, String.class);
 
-        System.out.println(result);
+        log.info(result);
 
-        this.uid = StringUtils.substringBetween(result, "\"uid\":\"", "\"}");
+        this.uid = StringUtils.substringBetween(result, "\"uid\":", "}");
     }
 
     /**
@@ -48,12 +51,19 @@ public class WeiboImpl  extends AbstractOAuth2ApiBinding implements Weibo  {
 
         String url = String.format(URL_GET_USERINFO, accessToken, uid);
 
+        log.info("获取weibo用户详情:"+url);
+
         String result = getRestTemplate().getForObject(url, String.class);
+
+        result = result.replace("\"class\":1,", "");
 
         log.info(result);
 
+
+
         WeiboUserInfo userInfo = null;
         try {
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             userInfo = objectMapper.readValue(result, WeiboUserInfo.class);
             return userInfo;
         } catch (Exception e) {

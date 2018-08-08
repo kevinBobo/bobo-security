@@ -41,14 +41,14 @@ public class BoboAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
 	 */
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException exception) throws IOException, ServletException {
+			AuthenticationException exception) throws IOException {
 		
-		logger.info("登录失败");
-		
+		log.info("登录失败");
+
 		response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
-		
+
 	}
 
 }

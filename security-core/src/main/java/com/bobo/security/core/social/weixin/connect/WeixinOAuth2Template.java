@@ -4,6 +4,7 @@
 package com.bobo.security.core.social.weixin.connect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ import java.util.Map;
  * @author bobo
  *
  */
+@Slf4j
 public class WeixinOAuth2Template extends OAuth2Template {
 	
 	private String clientId;
@@ -35,8 +37,6 @@ public class WeixinOAuth2Template extends OAuth2Template {
 	
 	private static final String REFRESH_TOKEN_URL = "https://api.weixin.qq.com/sns/oauth2/refresh_token";
 	
-	private Logger logger = LoggerFactory.getLogger(getClass());
-
 	public WeixinOAuth2Template(String clientId, String clientSecret, String authorizeUrl, String accessTokenUrl) {
 		super(clientId, clientSecret, authorizeUrl, accessTokenUrl);
 		setUseParametersForClientAuthentication(true);
@@ -77,11 +77,11 @@ public class WeixinOAuth2Template extends OAuth2Template {
 	@SuppressWarnings("unchecked")
 	private AccessGrant getAccessToken(StringBuilder accessTokenRequestUrl) {
 		
-		logger.info("获取access_token, 请求URL: "+accessTokenRequestUrl.toString());
+		log.info("获取access_token, 请求URL: "+accessTokenRequestUrl.toString());
 		
 		String response = getRestTemplate().getForObject(accessTokenRequestUrl.toString(), String.class);
 		
-		logger.info("获取access_token, 响应内容: "+response);
+		log.info("获取access_token, 响应内容: "+response);
 		
 		Map<String, Object> result = null;
 		try {

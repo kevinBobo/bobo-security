@@ -7,7 +7,10 @@ import com.bobo.security.app.authentication.openid.OpenIdAuthenticationSecurityC
 import com.bobo.security.core.authentication.FormAuthenticationConfig;
 import com.bobo.security.core.authentication.moblie.SmsCodeAuthenticationSecurityConfig;
 import com.bobo.security.core.authorize.AuthorizeConfigManager;
+import com.bobo.security.core.properties.SecurityConstants;
+import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.core.validata.code.ValidateCodeSecurityConfig;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -50,6 +53,9 @@ public class BoboResourceServerConfig extends ResourceServerConfigurerAdapter {
 	
 	@Autowired
 	private FormAuthenticationConfig formAuthenticationConfig;
+
+	@Autowired
+	private SecurityProperties securityProperties;
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -65,7 +71,13 @@ public class BoboResourceServerConfig extends ResourceServerConfigurerAdapter {
 			.apply(openIdAuthenticationSecurityConfig)
 				.and()
 			.csrf().disable();
-		
+
+		http.authorizeRequests().antMatchers(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL).permitAll();
+
+		if (StringUtils.isNotBlank(securityProperties.getNoAuthUrl().getUrl())){
+			http.authorizeRequests().antMatchers(securityProperties.getNoAuthUrl().getUrl()).permitAll();
+		}
+
 		authorizeConfigManager.config(http.authorizeRequests());
 	}
 	

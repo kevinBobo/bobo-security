@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.OAuth2Template;
@@ -36,40 +34,42 @@ public class QQOAuth2Template extends OAuth2Template {
 	@Override
 	protected AccessGrant postForAccessGrant(String accessTokenUrl, MultiValueMap<String, String> parameters) {
 
-		log.info("开始获取accessToken:"+accessTokenUrl);
+//		log.info("开始获取accessToken:"+accessTokenUrl);
+//
+//		String responseStr = getRestTemplate().postForObject(accessTokenUrl, parameters, String.class);
+//
+//		log.info("获取accessToken的响应："+responseStr);
+//
+//		//当错误的时候返回callback，我们转换为json
+//		int start = responseStr.lastIndexOf("{");
+//		int end = responseStr.lastIndexOf("}")+1;
+//
+//		String response = responseStr.substring(start, end);
+//
+//		//返回错误码时直接返回空
+//		Map<String, Object> result = null;
+//		try {
+//			result = new ObjectMapper().readValue(response, Map.class);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		//返回错误码时直接返回空
+//		if(StringUtils.isNotBlank(MapUtils.getString(result, "error"))){
+//			String errcode = MapUtils.getString(result, "error");
+//			String errmsg = MapUtils.getString(result, "error_description");
+//			throw new RuntimeException("获取access token失败, errcode:"+errcode+", errmsg:"+errmsg);
+//		}
+//
+//		String[] items = StringUtils.splitByWholeSeparatorPreserveAllTokens(responseStr, "&");
+//
+//		String accessToken = StringUtils.substringAfterLast(items[0], "=");
+//		Long expiresIn = new Long(StringUtils.substringAfterLast(items[1], "="));
+//		String refreshToken = StringUtils.substringAfterLast(items[2], "=");
 
-		String responseStr = getRestTemplate().postForObject(accessTokenUrl, parameters, String.class);
+		String accessToken = parameters.getFirst("code");
 		
-		log.info("获取accessToken的响应："+responseStr);
-
-		//当错误的时候返回callback，我们转换为json
-		int start = responseStr.lastIndexOf("{");
-		int end = responseStr.lastIndexOf("}")+1;
-
-		String response = responseStr.substring(start, end);
-
-		//返回错误码时直接返回空
-		Map<String, Object> result = null;
-		try {
-			result = new ObjectMapper().readValue(response, Map.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		//返回错误码时直接返回空
-		if(StringUtils.isNotBlank(MapUtils.getString(result, "error"))){
-			String errcode = MapUtils.getString(result, "error");
-			String errmsg = MapUtils.getString(result, "error_description");
-			throw new RuntimeException("获取access token失败, errcode:"+errcode+", errmsg:"+errmsg);
-		}
-
-		String[] items = StringUtils.splitByWholeSeparatorPreserveAllTokens(responseStr, "&");
-		
-		String accessToken = StringUtils.substringAfterLast(items[0], "=");
-		Long expiresIn = new Long(StringUtils.substringAfterLast(items[1], "="));
-		String refreshToken = StringUtils.substringAfterLast(items[2], "=");
-		
-		return new AccessGrant(accessToken, null, refreshToken, expiresIn);
+		return new AccessGrant(accessToken, null, null, null);
 	}
 	
 	/* (non-Javadoc)

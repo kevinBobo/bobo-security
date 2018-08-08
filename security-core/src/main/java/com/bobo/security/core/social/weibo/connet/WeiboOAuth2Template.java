@@ -78,45 +78,48 @@ public class WeiboOAuth2Template extends OAuth2Template {
     @SuppressWarnings("unchecked")
     protected AccessGrant postForAccessGrant(String accessTokenUrl,
                                              MultiValueMap<String, String> parameters) {
-        List<String> params = new ArrayList<>();
-        for (String key : parameters.keySet()) {
-            params.add(key + "=" + parameters.getFirst(key));
-        }
+//        parameters.set("redirect_uri","https://api.weibo.com/oauth2/default.html");
+//        List<String> params = new ArrayList<>();
+//        for (String key : parameters.keySet()) {
+//            params.add(key + "=" + parameters.getFirst(key));
+//        }
 
-        String url = accessTokenUrl + "?" + params.stream().collect(Collectors.joining("&"));
+//        String url = accessTokenUrl + "?" + params.stream().collect(Collectors.joining("&"));
 
 
-        log.info("开始请求微博accesstoken:"+url);
+//        log.info("开始请求微博accesstoken:"+accessTokenUrl);
+//
+//        String response = getRestTemplate()
+//                .postForObject(accessTokenUrl, parameters, String.class);
+//
+//        log.info(response);
+//
+//        //返回错误码时直接返回空
+//        Map<String, Object> result = null;
+//        try {
+//            result = new ObjectMapper().readValue(response, Map.class);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        //返回错误码时直接返回空
+//        if(StringUtils.isNotBlank(MapUtils.getString(result, "error_code"))){
+//            String errcode = MapUtils.getString(result, "error_code");
+//            String errmsg = MapUtils.getString(result, "error_description");
+//            throw new RuntimeException("获取access token失败, errcode:"+errcode+", errmsg:"+errmsg);
+//        }
+//
+//        String token = MapUtils.getString(result, "access_token");
+//
+//        Long expires = MapUtils.getLong(result, "expires_in");
 
-        String response = getRestTemplate()
-                .postForObject(url, null, String.class);
-
-        log.info(response);
-
-        //返回错误码时直接返回空
-        Map<String, Object> result = null;
-        try {
-            result = new ObjectMapper().readValue(response, Map.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //返回错误码时直接返回空
-        if(StringUtils.isNotBlank(MapUtils.getString(result, "error_code"))){
-            String errcode = MapUtils.getString(result, "error_code");
-            String errmsg = MapUtils.getString(result, "error");
-            throw new RuntimeException("获取access token失败, errcode:"+errcode+", errmsg:"+errmsg);
-        }
-
-        String token = MapUtils.getString(result, "access_token");
-
-        Long expires = MapUtils.getLong(result, "expires_in");
+        String token = parameters.getFirst("code");
 
         AccessGrant accessToken = new AccessGrant(
                 token,
                 null,
                 null,
-                expires != null ? Long.valueOf(expires) : null);
+                 null);
 
         return accessToken;
     }
