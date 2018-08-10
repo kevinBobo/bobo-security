@@ -3,6 +3,8 @@
  */
 package com.bobo.security.app.authentication;
 
+import com.bobo.security.app.social.AppSecretException;
+import com.bobo.security.core.support.BaseResponse;
 import com.bobo.security.core.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -44,10 +46,17 @@ public class BoboAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
 			AuthenticationException exception) throws IOException {
 		
 		log.info("登录失败");
-
-		response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+
+		if(exception instanceof AppSecretException){
+			AppSecretException e = (AppSecretException) exception;
+			response.setStatus(HttpStatus.OK.value());
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(e.getCode(),e.getMessage())));
+		}else {
+			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+		}
+
 
 	}
 

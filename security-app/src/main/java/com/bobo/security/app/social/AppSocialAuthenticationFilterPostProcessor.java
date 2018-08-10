@@ -3,6 +3,7 @@ package com.bobo.security.app.social;
 import com.bobo.security.core.social.support.SocialAuthenticationFilterPostProcessor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.social.security.SocialAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,12 @@ public class AppSocialAuthenticationFilterPostProcessor implements SocialAuthent
     @Autowired
     private AuthenticationSuccessHandler boboAuthenticationSuccessHandler;
 
+    @Autowired
+    private AuthenticationFailureHandler boboAuthenticationFailureHandler;
+
     @Override
     public void process(SocialAuthenticationFilter socialAuthenticationFilter) {
         socialAuthenticationFilter.setAuthenticationSuccessHandler(boboAuthenticationSuccessHandler);
+        socialAuthenticationFilter.setAuthenticationFailureHandler(boboAuthenticationFailureHandler);
     }
 }

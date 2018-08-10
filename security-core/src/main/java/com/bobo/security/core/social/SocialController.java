@@ -22,7 +22,7 @@ public abstract class SocialController {
 		userInfo.setProviderId(connection.getKey().getProviderId());
 		userInfo.setProviderUserId(connection.getKey().getProviderUserId());
 		userInfo.setNickname(connection.getDisplayName());
-		userInfo.setHeadimg(connection.getImageUrl());
+		userInfo.setAvatar(connection.getImageUrl());
 		return userInfo;
 	}
 	

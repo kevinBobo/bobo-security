@@ -20,6 +20,6 @@ public class SocialUserInfo {
 	
 	private String nickname;
 	
-	private String headimg;
+	private String avatar;
 	
 }

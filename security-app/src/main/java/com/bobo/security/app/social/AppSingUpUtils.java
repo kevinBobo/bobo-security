@@ -3,7 +3,6 @@
  */
 package com.bobo.security.app.social;
 
-import com.bobo.security.app.AppSecretException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -35,12 +34,51 @@ public class AppSingUpUtils {
 	private ConnectionFactoryLocator connectionFactoryLocator;
 
 	/**
+	 * 缓存手机号到redis
+	 * @param request
+	 * @param phtone
+	 */
+	public void saveRegisterPhone(WebRequest request,String phtone){
+		redisTemplate.opsForValue().set(getPhoneKey(request), phtone, 10, TimeUnit.MINUTES);
+	}
+
+	/**
+	 * 获取到缓存的手机号
+	 * @param request
+	 * @return
+	 */
+	public String getRegisterPhone(WebRequest request){
+		String key = getPhoneKey(request);
+		if(!redisTemplate.hasKey(key)){
+			throw AppSecretException.NO_BIND_PHONE;
+		}
+		return (String) redisTemplate.opsForValue().get(key);
+	}
+
+	public void deletePhone(WebRequest request){
+		redisTemplate.delete(getPhoneKey(request));
+	}
+
+	/**
 	 * 缓存社交网站用户信息到redis
 	 * @param request
 	 * @param connectionData
 	 */
 	public void saveConnectionData(WebRequest request, ConnectionData connectionData) {
-		redisTemplate.opsForValue().set(getKey(request), connectionData, 10, TimeUnit.MINUTES);
+		redisTemplate.opsForValue().set(getConnectionDataKey(request), connectionData, 10, TimeUnit.MINUTES);
+	}
+
+	/**
+	 * 从redis获取到保存的社交信息
+	 * @param request
+	 * @return
+	 */
+	public ConnectionData getConnectionData(WebRequest request){
+		String key = getConnectionDataKey(request);
+		if(!redisTemplate.hasKey(key)){
+			throw AppSecretException.NO_BIND_THIRD;
+		}
+		return  (ConnectionData) redisTemplate.opsForValue().get(key);
 	}
 
 	/**
@@ -49,9 +87,9 @@ public class AppSingUpUtils {
 	 * @param userId
 	 */
 	public void doPostSignUp(WebRequest request, String userId) {
-		String key = getKey(request);
+		String key = getConnectionDataKey(request);
 		if(!redisTemplate.hasKey(key)){
-			throw new AppSecretException("无法找到缓存的用户社交账号信息");
+			throw AppSecretException.NO_BIND_THIRD;
 		}
 		ConnectionData connectionData = (ConnectionData) redisTemplate.opsForValue().get(key);
 		Connection<?> connection = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId())
@@ -66,12 +104,21 @@ public class AppSingUpUtils {
 	 * @param request
 	 * @return
 	 */
-	private String getKey(WebRequest request) {
+	private String getConnectionDataKey(WebRequest request) {
 		String deviceId = request.getHeader("deviceId");
 		if (StringUtils.isBlank(deviceId)) {
-			throw new AppSecretException("设备id参数不能为空");
+			throw AppSecretException.NO_DEVICEID;
 		}
 		return "bobo:security:social.connect." + deviceId;
 	}
+
+	private String getPhoneKey(WebRequest request){
+		String deviceId = request.getHeader("deviceId");
+		if (StringUtils.isBlank(deviceId)) {
+			throw AppSecretException.NO_DEVICEID;
+		}
+		return "bobo:security:social.connect.phone" + deviceId;
+	}
+
 
 }

@@ -24,8 +24,8 @@ public class TokenJwtEnhancer implements TokenEnhancer {
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		Map<String, Object> info = new HashMap<>();
 //		info.put("company", "bobo");
-		
-		((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(info);
+        Object details = authentication.getDetails();
+        ((DefaultOAuth2AccessToken)accessToken).setAdditionalInformation(info);
 		
 		return accessToken;
 	}
