@@ -11,6 +11,7 @@ import org.springframework.social.connect.ConnectionData;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.concurrent.TimeUnit;
@@ -95,8 +96,17 @@ public class AppSingUpUtils {
 		Connection<?> connection = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId())
 				.createConnection(connectionData);
 		usersConnectionRepository.createConnectionRepository(userId).addConnection(connection);
-		
+
+
 		redisTemplate.delete(key);
+	}
+
+	/**
+	 * 查看用户是否有绑定
+	 */
+	public boolean hasConnection(String userId){
+		MultiValueMap<String, Connection<?>> allConnections = usersConnectionRepository.createConnectionRepository(userId).findAllConnections();
+		return allConnections.size()>0;
 	}
 
 	/**

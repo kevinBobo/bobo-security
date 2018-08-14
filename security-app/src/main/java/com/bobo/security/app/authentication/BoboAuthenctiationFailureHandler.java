@@ -50,7 +50,7 @@ public class BoboAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
 
 		if(exception instanceof AppSecretException){
 			AppSecretException e = (AppSecretException) exception;
-			response.setStatus(HttpStatus.OK.value());
+			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(e.getCode(),e.getMessage())));
 		}else {
 			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
