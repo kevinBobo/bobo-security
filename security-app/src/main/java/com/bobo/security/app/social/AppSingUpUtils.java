@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -105,14 +108,23 @@ public class AppSingUpUtils {
 	 * 查看用户是否有绑定
 	 */
 	public boolean hasConnection(String userId){
+		boolean flag = false;
 		MultiValueMap<String, Connection<?>> allConnections = usersConnectionRepository.createConnectionRepository(userId).findAllConnections();
-		return allConnections.size()>0;
+		Set<Map.Entry<String, List<Connection<?>>>> entries = allConnections.entrySet();
+
+		for (Map.Entry<String,List<Connection<?>>> entry :entries) {
+			if (entry.getValue().size()>0){
+				flag = true;
+			}
+		}
+		return flag;
 	}
 
 	/**
 	 * 获取redis key
 	 * @param request
 	 * @return
+	 *
 	 */
 	private String getConnectionDataKey(WebRequest request) {
 		String deviceId = request.getHeader("deviceId");

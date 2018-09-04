@@ -3,6 +3,7 @@
  */
 package com.bobo.security.core.social.view;
 
+import com.bobo.security.core.support.BaseResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class BoboConnectionStatusView extends AbstractView {
 		for (String key : connections.keySet()) {
 			result.put(key, CollectionUtils.isNotEmpty(connections.get(key)));
 		}
-		
+
 		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().write(objectMapper.writeValueAsString(result));
+		response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse<Map>(0,"操作成功",result)));
 	}
 
 }

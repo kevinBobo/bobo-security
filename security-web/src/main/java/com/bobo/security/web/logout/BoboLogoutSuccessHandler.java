@@ -3,6 +3,7 @@
  */
 package com.bobo.security.web.logout;
 
+import com.bobo.security.core.support.BaseResponse;
 import com.bobo.security.core.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
@@ -51,7 +52,7 @@ public class BoboLogoutSuccessHandler implements LogoutSuccessHandler {
 
 		if (StringUtils.isBlank(signOutSuccessUrl)) {
 			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse("退出成功")));
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse<>(0,"退出成功")));
 		} else {
 			response.sendRedirect(signOutSuccessUrl);
 		}

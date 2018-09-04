@@ -3,6 +3,7 @@
  */
 package com.bobo.security.app.authentication;
 
+import com.bobo.security.core.support.BaseResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
@@ -93,7 +94,7 @@ public class BoboAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
 		OAuth2AccessToken token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication);
 
 		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().write(objectMapper.writeValueAsString(token));
+		response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse<OAuth2AccessToken>(0,"操作成功",token)));
 
 	}
 

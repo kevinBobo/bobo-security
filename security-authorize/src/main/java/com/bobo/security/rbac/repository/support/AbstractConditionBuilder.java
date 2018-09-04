@@ -40,7 +40,6 @@ public abstract class AbstractConditionBuilder<T> {
     /**
      * 添加between条件查询
      * @param queryWraper
-     * @param experssion
      * @param minValue  范围下限
      * @param maxValue  范围上限
      */
@@ -76,7 +75,6 @@ public abstract class AbstractConditionBuilder<T> {
     /**
      * 添加大于条件查询
      * @param queryWraper
-     * @param experssion
      * @param minValue
      */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -90,7 +88,6 @@ public abstract class AbstractConditionBuilder<T> {
 	/**
      * 添加大于等于条件查询
      * @param queryWraper
-     * @param experssion
      * @param minValue
      */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -104,7 +101,6 @@ public abstract class AbstractConditionBuilder<T> {
 	/**
      * 添加小于条件查询
      * @param queryWraper
-     * @param experssion
      * @param maxValue
      */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -118,7 +114,6 @@ public abstract class AbstractConditionBuilder<T> {
 	/**
      * 添加小于等于条件查询
      * @param queryWraper
-     * @param experssion
      * @param maxValue
      */
 	@SuppressWarnings({ "unchecked", "rawtypes" })

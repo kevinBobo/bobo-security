@@ -6,6 +6,7 @@ package com.bobo.security.app.authentication;
 import com.bobo.security.app.social.AppSecretException;
 import com.bobo.security.core.support.BaseResponse;
 import com.bobo.security.core.support.SimpleResponse;
+import com.bobo.security.core.validata.code.ValidateCodeException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,16 @@ public class BoboAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
 		response.setContentType("application/json;charset=UTF-8");
 
 		if(exception instanceof AppSecretException){
+			response.setStatus(HttpStatus.OK.value());
 			AppSecretException e = (AppSecretException) exception;
-			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(e.getCode(),e.getMessage())));
+		}else if (exception instanceof ValidateCodeException){
+			response.setStatus(HttpStatus.OK.value());
+			ValidateCodeException e = (ValidateCodeException) exception;
 			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(e.getCode(),e.getMessage())));
 		}else {
-			response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-			response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+			response.setStatus(HttpStatus.OK.value());
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(900000,exception.getMessage())));
 		}
 
 

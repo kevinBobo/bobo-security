@@ -56,7 +56,6 @@ public class QueryResultConverter {
 	
 	/**
 	 * @param pageData
-	 * @param clazz
 	 * @param pageable
 	 * @param converter
 	 * @return

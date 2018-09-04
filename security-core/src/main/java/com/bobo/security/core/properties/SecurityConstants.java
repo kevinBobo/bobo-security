@@ -51,6 +51,17 @@ public interface SecurityConstants {
 	 * openid参数名
 	 */
 	String DEFAULT_PARAMETER_NAME_OPENID = "openId";
+
+	/**
+	 * accesstoken参数名
+	 */
+	String DEFAULT_PARAMETER_NAME_ACCESSTOKEN = "accesstoken";
+
+	/**
+	 * accesstoken参数名
+	 */
+	String DEFAULT_PARAMETER_NAME_DEVICEID = "deviceId";
+
 	/**
 	 * providerId参数名
 	 */

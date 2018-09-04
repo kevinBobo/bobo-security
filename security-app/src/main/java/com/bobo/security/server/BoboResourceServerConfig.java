@@ -75,7 +75,9 @@ public class BoboResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests().antMatchers(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL).permitAll();
 
 		if (StringUtils.isNotBlank(securityProperties.getNoauth().getUrl())){
-			http.authorizeRequests().antMatchers(securityProperties.getNoauth().getUrl()).permitAll();
+			String url = securityProperties.getNoauth().getUrl();
+			String[] noAuthUrl = url.split(",");
+			http.authorizeRequests().antMatchers(noAuthUrl).permitAll();
 		}
 
 		authorizeConfigManager.config(http.authorizeRequests());

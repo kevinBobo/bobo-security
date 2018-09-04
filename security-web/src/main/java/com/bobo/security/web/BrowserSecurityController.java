@@ -7,6 +7,7 @@ import com.bobo.security.core.properties.SecurityConstants;
 import com.bobo.security.core.properties.SecurityProperties;
 import com.bobo.security.core.social.SocialController;
 import com.bobo.security.core.social.support.SocialUserInfo;
+import com.bobo.security.core.support.BaseResponse;
 import com.bobo.security.core.support.SimpleResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class BrowserSecurityController extends SocialController {
 	 */
 	@RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-	public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response)
+	public BaseResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -74,7 +75,7 @@ public class BrowserSecurityController extends SocialController {
 			}
 		}
 
-		return new SimpleResponse("访问的服务需要身份认证，请引导用户到登录页");
+		return new BaseResponse<>(9500000,"访问的服务需要身份认证，请引导用户到登录页");
 	}
 
 	/**

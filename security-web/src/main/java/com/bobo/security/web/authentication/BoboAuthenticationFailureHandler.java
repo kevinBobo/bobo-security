@@ -2,6 +2,7 @@ package com.bobo.security.web.authentication;
 
 import com.bobo.security.core.properties.LoginResponseType;
 import com.bobo.security.core.properties.SecurityProperties;
+import com.bobo.security.core.support.BaseResponse;
 import com.bobo.security.core.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class BoboAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
         if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+            response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(900008,"登陆失败",exception.getMessage())));
         }else{
             super.onAuthenticationFailure(request, response, exception);
         }

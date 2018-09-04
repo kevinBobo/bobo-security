@@ -12,12 +12,20 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseResponse {
+public class BaseResponse<T> {
 
+    public final static BaseResponse SUCCESS = new BaseResponse(0,"操作成功");
 
     private int code;
 
     private String message;
+
+    private T data;
+
+    public BaseResponse(int code,String message){
+        this.code = code;
+        this.message = message;
+    }
 
 
 }

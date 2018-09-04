@@ -2,6 +2,7 @@ package com.bobo.security.web.authentication;
 
 import com.bobo.security.core.properties.LoginResponseType;
 import com.bobo.security.core.properties.SecurityProperties;
+import com.bobo.security.core.support.BaseResponse;
 import com.bobo.security.core.support.SimpleResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,7 @@ public class BoboAuthenticationSuccessHandler extends SavedRequestAwareAuthentic
         if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
             response.setContentType("application/json;charset=UTF-8");
             String type = authentication.getClass().getSimpleName();
-            response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(type)));
+            response.getWriter().write(objectMapper.writeValueAsString(BaseResponse.SUCCESS));
         } else {
             // 如果设置了imooc.security.browser.singInSuccessUrl，总是跳到设置的地址上
             // 如果没设置，则尝试跳转到登录之前访问的地址上，如果登录前访问地址为空，则跳到网站根路径上
