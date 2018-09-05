@@ -27,7 +27,7 @@ public class SmsCodeProperties {
     /**
      * 是否限流
      */
-    private boolean isLimit = false;
+    private boolean limit = false;
 
 
 }
