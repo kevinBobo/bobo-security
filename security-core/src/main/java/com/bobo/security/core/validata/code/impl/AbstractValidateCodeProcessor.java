@@ -3,8 +3,6 @@
  */
 package com.bobo.security.core.validata.code.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.bobo.security.core.validata.code.ValidateCode;
 import com.bobo.security.core.validata.code.ValidateCodeException;
 import com.bobo.security.core.validata.code.ValidateCodeGenerator;
@@ -18,10 +16,6 @@ import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Map;
 
 /**
