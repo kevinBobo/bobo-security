@@ -40,9 +40,9 @@ public class BoboAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
         logger.info("登录失败");
 
         if (LoginResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setStatus(HttpStatus.OK.value());
             response.setContentType("application/json;charset=UTF-8");
-            response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(900008,"登陆失败",exception.getMessage())));
+            response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(900008,"账户名或密码错误",exception.getMessage())));
         }else{
             super.onAuthenticationFailure(request, response, exception);
         }

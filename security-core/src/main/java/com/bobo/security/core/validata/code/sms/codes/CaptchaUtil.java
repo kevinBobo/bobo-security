@@ -25,11 +25,11 @@ import java.util.concurrent.TimeUnit;
 public class CaptchaUtil {
 
     @Autowired
-    private RedisTemplate<Object, Object> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
-    private static final String SMS_COUNT_KEY = "sy:sms:count:%s";
+    private static final String SMS_COUNT_KEY = "girlx:sms:count:%s";
     private static final int SMS_COUNT_EXPIRE = 24 * 60;
-    private static final String SMS_CAPTCHA_KEY = "sy:sms:captcha:%s";
+    private static final String SMS_CAPTCHA_KEY = "girlx:sms:captcha:%s";
     private static final int SMS_CAPTCHA_EXPIRE = 10;
 
     //	private static int codeCount = ConfigReaderUtils.getInteger("captcha.codeCount", 4);

@@ -10,6 +10,7 @@ import com.bobo.security.core.validata.code.ValidateCodeType;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -33,6 +34,7 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 	 */
 	@Override
 	public void save(ServletWebRequest request, ValidateCode code, ValidateCodeType type) {
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.opsForValue().set(buildKey(request, type), code, 30, TimeUnit.MINUTES);
 	}
 
@@ -42,6 +44,7 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 	 */
 	@Override
 	public ValidateCode get(ServletWebRequest request, ValidateCodeType type) {
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		Object value = redisTemplate.opsForValue().get(buildKey(request, type));
 		if (value == null) {
 			return null;
@@ -55,6 +58,7 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 	 */
 	@Override
 	public void remove(ServletWebRequest request, ValidateCodeType type) {
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
 		redisTemplate.delete(buildKey(request, type));
 	}
 
