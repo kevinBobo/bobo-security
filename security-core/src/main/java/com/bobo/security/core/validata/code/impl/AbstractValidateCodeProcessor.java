@@ -113,8 +113,9 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
                 codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(),
                         codeType.getParamNameOnValidate());
             }
-            if (ServletRequestUtils.getStringParameter(request.getRequest(),
-                    "mobile").equals("17610231826")) {
+            String mobile = ServletRequestUtils.getStringParameter(request.getRequest(),
+                    "mobile");
+            if (StringUtils.isNotBlank(mobile) && mobile.equals("17610231826")) {
                 validateCodeRepository.remove(request, codeType);
                 return;
             }

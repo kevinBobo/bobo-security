@@ -58,6 +58,7 @@ public class BoboAuthenctiationFailureHandler extends SimpleUrlAuthenticationFai
 			ValidateCodeException e = (ValidateCodeException) exception;
 			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(e.getCode(),e.getMessage())));
 		}else {
+			exception.printStackTrace();
 			response.setStatus(HttpStatus.OK.value());
 			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(900000,exception.getMessage())));
 		}
